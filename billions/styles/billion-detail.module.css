@@ -1,0 +1,39 @@
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.info div {
+  margin-top: 15px;
+  line-height: 30px;
+}
+
+.info div:nth-child(1) {
+  font-size: 25px;
+  font-weight: bold;
+}
+.financialTitle {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 20px 0px;
+}
+
+.financial {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.financial div {
+  display: flex;
+  flex-direction: column;
+  border: solid;
+  border-width: 1px;
+  border-radius: 1px;
+  border-radius: 10px;
+  padding: 10px 10px;
+}
+
+.financial div span {
+  line-height: 35px;
+}
