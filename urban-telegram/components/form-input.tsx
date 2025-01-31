@@ -1,21 +1,18 @@
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
-import React from "react";
+import React, { InputHTMLAttributes } from "react";
 
 interface FormInputProps {
-  type: string;
   name: string;
-  placeholder: string;
-  errors: string[];
+  errors?: string[];
   children?: React.ReactNode;
 }
 
 export default function FormInput({
-  type,
   name,
-  placeholder,
-  errors,
+  errors = [],
   children,
-}: FormInputProps) {
+  ...props
+}: FormInputProps & InputHTMLAttributes<HTMLInputElement>) {
   return (
     <>
       <div className="relative">
@@ -24,11 +21,12 @@ export default function FormInput({
         </div>
         <input
           name={name}
-          type={type}
-          placeholder={placeholder}
           className={`rounded-full ring-1 border-transparent ${
-            errors.length > 0 ? "ring-red-500" : "ring-neutral-500"
-          }  focus:ring-neutral-500 focus:ring-offset-2 focus:border-gray-500 pl-9 w-full bg-transparent`}
+            errors.length > 0
+              ? "ring-red-500 focus:border-red-500"
+              : "ring-neutral-500 focus:border-gray-500"
+          }  focus:ring-neutral-500 focus:ring-offset-2 pl-9 w-full bg-transparent`}
+          {...props}
         />
       </div>
       {errors.map((error, index) => (
