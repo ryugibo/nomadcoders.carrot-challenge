@@ -16,9 +16,11 @@ export default async function TweetDetail({
     return notFound();
   }
   return (
-    <div>
-      <div>Written by {tweet.user.username}</div>
-      <div>{formatToTimeAgo(tweet.created_at)}</div>
+    <div className="flex flex-col gap-5 m-5">
+      <div className="flex flex-row justify-between">
+        <div>Written by {tweet.user.username}</div>
+        <div>{formatToTimeAgo(tweet.created_at)}</div>
+      </div>
       {tweet!.tweet}
     </div>
   );
