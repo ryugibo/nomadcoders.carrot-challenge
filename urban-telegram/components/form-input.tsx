@@ -1,4 +1,3 @@
-import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import React, { InputHTMLAttributes } from "react";
 
 interface FormInputProps {

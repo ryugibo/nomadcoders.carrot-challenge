@@ -1,16 +1,4 @@
-import {
-  ArrowLeftCircleIcon,
-  ArrowLeftIcon,
-  ArrowRightCircleIcon,
-  ArrowRightIcon,
-  PaperAirplaneIcon,
-} from "@heroicons/react/24/solid";
-
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 import { getTweetCount, getTweets } from "./action";
-import ListTweet from "@/components/list-tweet";
 import TweetList from "@/components/tweet-list";
 import { TWEETS_PER_PAGE } from "@/lib/constants";
 
