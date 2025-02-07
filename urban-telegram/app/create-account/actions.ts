@@ -73,7 +73,6 @@ export async function createAccount(prevState: any, formData: FormData) {
     return result.error.flatten();
   }
   const hashedPassword = await bcrypt.hash(result.data.password, 12);
-  console.log(hashedPassword);
   const user = await db.user.create({
     data: {
       username: result.data.username,
@@ -81,10 +80,9 @@ export async function createAccount(prevState: any, formData: FormData) {
     },
     select: { id: true },
   });
-  console.log(user);
   const session = await getSession();
   session.id = user.id;
   await session.save();
 
-  redirect("/profile");
+  redirect("/");
 }

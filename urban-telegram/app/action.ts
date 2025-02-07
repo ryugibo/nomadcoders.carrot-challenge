@@ -1,42 +1,37 @@
 "use server";
 
-import { z } from "zod";
+import db from "@/lib/db";
+import { Prisma } from "@prisma/client";
 
-const checkEmail = (email: string) => email.endsWith("@zod.com");
+export async function getTweetCount() {
+  return await db.tweet.count();
+}
+export async function getTweet(id: number) {
+  return await db.tweet.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      tweet: true,
+      created_at: true,
+      user: { select: { username: true } },
+    },
+  });
+}
+export async function getTweets(page: number, amount: number) {
+  const tweets = await db.tweet.findMany({
+    select: {
+      id: true,
+      tweet: true,
+      created_at: true,
+      user: { select: { username: true } },
+    },
+    skip: page * amount,
+    take: amount,
+    orderBy: { created_at: "desc" },
+  });
+  return tweets;
+}
 
-const regexPassword = new RegExp(/^(?=.*[a-zA-Z])(?=.*\d).+$/);
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .refine(checkEmail, "Only @zod.com emails are allowed"),
-  username: z.string().min(5, "Username should be at least 5 characters long."),
-  password: z
-    .string()
-    .min(10, "Password should be at least 10 characters long.")
-    .regex(
-      regexPassword,
-      "Password should contain at least one number(0123456789)"
-    ),
-});
-
-export const onSubmit = async (prevState: any, formData: FormData) => {
-  const data = {
-    email: formData.get("email"),
-    username: formData.get("username"),
-    password: formData.get("password"),
-  };
-  const result = formSchema.safeParse(data);
-  if (!result.success) {
-    return {
-      requested: true,
-      errors: result.error.flatten(),
-    };
-  }
-  return {
-    requested: true,
-    errors: undefined,
-  };
-};
+export type tweetCoutnt = Prisma.PromiseReturnType<typeof getTweetCount>;
+export type tweet = Prisma.PromiseReturnType<typeof getTweet>;
+export type tweets = Prisma.PromiseReturnType<typeof getTweets>;
