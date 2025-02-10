@@ -45,7 +45,7 @@ export default function TweetList({
 
   return (
     <div className="h-full w-full relative">
-      <div>
+      <div className="flex flex-col gap-5">
         {tweets.map((tweet) => (
           <ListTweet key={tweet.id} username={tweet.user.username} {...tweet} />
         ))}
