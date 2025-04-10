@@ -8,7 +8,7 @@ interface IBuyLink {
   url: string;
 }
 
-interface ICategoryBestSeller {
+export interface ICategoryBestSeller {
   rank: number;
   rank_last_week: number;
   weeks_on_list: number;
