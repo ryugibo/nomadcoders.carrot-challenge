@@ -3,4 +3,4 @@
 https://nomadcoders.co/carrot-challenge
 
 - `billions/` https://ryugibo-nomadcoders-carrot-challenge-billions.vercel.app/
-
+- `bestseller/` https://react-study-nextjs-ryugibo.vercel.app/
