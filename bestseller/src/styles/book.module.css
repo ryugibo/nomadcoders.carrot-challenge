@@ -25,22 +25,16 @@
   display: inline-block;
   border: 1px solid white;
   text-align: center;
-  border-radius: 10px;
   padding: 5px 0px;
 }
 
 .shop .shop_panel {
-  visibility: hidden;
-  width: 200px;
+  width: 100%;
   text-align: center;
-  border-radius: 6px;
   position: absolute;
   z-index: 1;
-  bottom: 0;
-}
-
-/* 마우스 오버 시 툴팁 표시 */
-.shop:hover .shop_panel {
-  visibility: visible;
-  opacity: 1;
+  bottom: 100%;
+  left: 0;
+  border: 1px solid white;
+  border-bottom: none;
 }
