@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { motion, Variants } from "motion/react";
 import styles from "@/styles/category-button.module.css";
 
-const variants = {
+const variants: Variants = {
   initial: {
     scale: 1,
     color: "#fff",

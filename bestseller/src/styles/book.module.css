@@ -17,7 +17,7 @@
 }
 
 .author {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .shop {
@@ -32,12 +32,11 @@
 .shop .shop_panel {
   visibility: hidden;
   width: 200px;
-  background-color: #2d2d2d;
   text-align: center;
   border-radius: 6px;
   position: absolute;
   z-index: 1;
-  bottom: 70%;
+  bottom: 0;
 }
 
 /* 마우스 오버 시 툴팁 표시 */
