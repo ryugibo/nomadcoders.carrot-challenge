@@ -58,38 +58,11 @@ interface ICategoryBestSellersResponse {
   };
 }
 
-async function getCategoryBestSellers(
+export async function getCategoryBestSellers(
   name: string
 ): Promise<ICategoryBestSellersResponse> {
   const res = await fetch(
     `https://books-api.nomadcoders.workers.dev/list?name=${name}`
   );
   return res.json();
-}
-
-interface IListProps {
-  params: Promise<{ name: string }>;
-}
-
-export default async function List({ params }: IListProps) {
-  const { name } = await params;
-  const result = await getCategoryBestSellers(name);
-  return (
-    <div>
-      <header>{result.results.display_name}</header>
-      <div>
-        {result.results.books.map((book) => (
-          <div key={book.primary_isbn10}>
-            <h2>{book.title}</h2>
-            <h3>{book.author}</h3>
-            <img src={book.book_image} alt={book.title} />
-            <p>{book.description}</p>
-            <p>Rank: {book.rank}</p>
-            <p>Weeks on List: {book.weeks_on_list}</p>
-            <a href={book.amazon_product_url}>Buy on Amazon</a>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 }

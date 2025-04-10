@@ -21,7 +21,12 @@
   list-style: none;
   transform: none;
   transition: all 0.1s ease-in-out;
+  position: relative;
 }
-.nav ul li:hover {
-  transform: scale(1.05);
+
+.nav ul li div {
+  position: absolute;
+  border: 3px solid white;
+  width: 100%;
+  bottom: -20px;
 }
