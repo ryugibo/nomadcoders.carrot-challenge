@@ -53,7 +53,7 @@ interface ICategoryBestSellersResponse {
     display_name: string;
     normal_list_ends_at: number;
     updated: "WEEKLY" | "MONTHLY";
-    books: ICategoryBestSeller[];
+    books?: ICategoryBestSeller[];
     corrections: [];
   };
 }

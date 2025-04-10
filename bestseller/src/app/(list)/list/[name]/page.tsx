@@ -11,7 +11,7 @@ export default async function List({ params }: IListProps) {
   const result = await getCategoryBestSellers(name);
   return (
     <div className={style.container}>
-      {result.results.books.map((book, index) => (
+      {result.results.books?.map((book, index) => (
         <Book key={index} {...book} />
       ))}
     </div>
