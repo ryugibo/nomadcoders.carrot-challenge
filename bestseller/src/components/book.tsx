@@ -4,7 +4,6 @@ import { ICategoryBestSeller } from "@/api/category-best-sellers";
 import Link from "next/link";
 import styles from "@/styles/book.module.css";
 import { motion, Variants } from "motion/react";
-import { init } from "next/dist/compiled/webpack/webpack";
 
 const shopButtonVariants: Variants = {
   initial: {
