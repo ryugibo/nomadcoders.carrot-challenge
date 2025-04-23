@@ -22,47 +22,43 @@ const formSchema = z.object({
     ),
 });
 
-export const onSubmit = async (
-  prevState: {
-    requested: boolean;
-    data: { email: string; username: string; password: string };
-    errors:
-      | typeToFlattenedError<
-          {
-            email: string;
-            username: string;
-            password: string;
-          },
-          string
-        >
-      | undefined;
-  },
-  payload: FormData
-) => {
+export interface State {
+  requested: boolean;
+  data: { email: string; username: string; password: string };
+  errors:
+    | typeToFlattenedError<
+        {
+          email: string;
+          username: string;
+          password: string;
+        },
+        string
+      >
+    | undefined;
+}
+
+export const onSubmit = async (prevState: State, payload: FormData) => {
   const data = {
     email: payload.get("email"),
     username: payload.get("username"),
     password: payload.get("password"),
   };
+  const clientData = {
+    email: typeof data?.email === "string" ? data.email : "",
+    username: typeof data?.username === "string" ? data.username : "",
+    password: typeof data?.password === "string" ? data.password : "",
+  };
   const result = formSchema.safeParse(data);
   if (!result.success) {
     return {
       requested: true,
-      data: {
-        email: data.email?.toString() || "",
-        username: data.username?.toString() || "",
-        password: data.password?.toString() || "",
-      },
+      data: clientData,
       errors: result.error.flatten(),
     };
   }
   return {
     requested: true,
-    data: {
-      email: data.email?.toString() || "",
-      username: data.username?.toString() || "",
-      password: data.password?.toString() || "",
-    },
+    data: clientData,
     errors: undefined,
   };
 };

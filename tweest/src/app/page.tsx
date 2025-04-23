@@ -9,10 +9,10 @@ import {
   UserIcon,
 } from "@heroicons/react/24/solid";
 import { useActionState } from "react";
-import { onSubmit } from "./action";
+import { onSubmit, State } from "./action";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
-const initialState = {
+const initialState: State = {
   requested: false,
   data: { email: "", username: "", password: "" },
   errors: undefined,
