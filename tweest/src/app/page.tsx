@@ -1,66 +1,30 @@
 "use client";
 
-import FormButton from "@/components/form-button";
-import FormInput from "@/components/form-input";
-import {
-  EnvelopeIcon,
-  FireIcon,
-  KeyIcon,
-  UserIcon,
-} from "@heroicons/react/24/solid";
-import { useActionState } from "react";
-import { onSubmit, State } from "./action";
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 
-const initialState: State = {
-  requested: false,
-  data: { email: "", username: "", password: "" },
-  errors: undefined,
-};
+import Link from "next/link";
 
 export default function Home() {
-  const [state, action] = useActionState(onSubmit, initialState);
   return (
-    <div className="flex flex-col max-w-sm mx-auto h-screen justify-center">
-      <div className="text-red-500 size-16 mb-16 flex w-full">
-        <FireIcon />
+    <div className="flex flex-col items-center justify-between min-h-screen p-6">
+      <div className="my-auto flex flex-col items-center gap-2 *:font-medium">
+        <span className="text-9xl w-full">
+          <PaperAirplaneIcon />
+        </span>
+        <h1 className="text-4xl">Tweest</h1>
+        <h2 className="text-2xl">Tweest에 어서오세요!</h2>
       </div>
-      <form action={action} className="flex flex-col gap-3">
-        <FormInput
-          name="email"
-          type="email"
-          placeholder="Email"
-          defaultValue={state.data.email}
-          errors={state.errors?.fieldErrors.email}
-        >
-          <EnvelopeIcon className="size-4" />
-        </FormInput>
-        <FormInput
-          name="username"
-          type="text"
-          placeholder="Username"
-          defaultValue={state.data.username}
-          errors={state.errors?.fieldErrors.username}
-        >
-          <UserIcon className="size-4" />
-        </FormInput>
-        <FormInput
-          name="password"
-          type="password"
-          placeholder="Password"
-          defaultValue={state.data.password}
-          errors={state.errors?.fieldErrors.password}
-        >
-          <KeyIcon className="size-4" />
-        </FormInput>
-        <FormButton text="Log in" />
-      </form>{" "}
-      {state.requested && state.errors === undefined && (
-        <div className="bg-green-500 h-14 flex items-center px-2 rounded-2xl mt-3">
-          <CheckCircleIcon className="size-6 mr-4" />
-          Welcome back!
+      <div className="flex flex-col items-center gap-3 w-full">
+        <Link href="/create-account" className="primary-btn text-lg py-2.5">
+          시작하기
+        </Link>
+        <div className="flex gap-2">
+          <span>이미 계정이 있나요?</span>
+          <Link href="/log-in" className="hover:underline">
+            로그인
+          </Link>
         </div>
-      )}
+      </div>
     </div>
   );
 }
