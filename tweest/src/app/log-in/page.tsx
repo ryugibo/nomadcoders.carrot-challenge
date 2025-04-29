@@ -10,7 +10,7 @@ import Link from "next/link";
 import Logo from "@/components/logo";
 
 export default function Login() {
-  const [state, action] = useActionState(login, null);
+  const [state, action] = useActionState(login, undefined);
   return (
     <div className="flex flex-col gap-10 py-8 px-6 h-screen justify-center">
       <div className="flex flex-col gap-2 items-center *:font-medium">

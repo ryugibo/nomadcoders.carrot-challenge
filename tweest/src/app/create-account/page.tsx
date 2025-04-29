@@ -10,7 +10,7 @@ import Link from "next/link";
 import Logo from "@/components/logo";
 
 export default function CreateAccount() {
-  const [state, action] = useActionState(createAccount, null);
+  const [state, action] = useActionState(createAccount, undefined);
   return (
     <div className="flex flex-col gap-10 py-8 px-6 justify-center h-screen">
       <div className="flex flex-col gap-2 *:font-medium items-center">

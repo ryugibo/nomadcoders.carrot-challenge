@@ -1,64 +1,35 @@
-"use server";
+import db from "@/lib/db";
+import { Prisma } from "@prisma/client";
 
-import { typeToFlattenedError, z } from "zod";
-
-const checkEmail = (email: string) => email.endsWith("@zod.com");
-
-const regexPassword = new RegExp(/^(?=.*[a-zA-Z]*)(?=.*\d).+$/);
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .refine(checkEmail, "Only @zod.com emails are allowed"),
-  username: z.string().min(5, "Username should be at least 5 characters long."),
-  password: z
-    .string()
-    .min(10, "Password should be at least 10 characters long.")
-    .regex(
-      regexPassword,
-      "Password should contain at least one number(0123456789)"
-    ),
-});
-
-export interface State {
-  requested: boolean;
-  data: { email: string; username: string; password: string };
-  errors:
-    | typeToFlattenedError<
-        {
-          email: string;
-          username: string;
-          password: string;
-        },
-        string
-      >
-    | undefined;
+export async function getTweetCount() {
+  return await db.tweet.count();
+}
+export async function getTweet(id: number) {
+  return await db.tweet.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      tweet: true,
+      created_at: true,
+      user: { select: { username: true } },
+    },
+  });
+}
+export async function getTweets(page: number, amount: number) {
+  const tweets = await db.tweet.findMany({
+    select: {
+      id: true,
+      tweet: true,
+      created_at: true,
+      user: { select: { username: true } },
+    },
+    skip: page * amount,
+    take: amount,
+    orderBy: { created_at: "desc" },
+  });
+  return tweets;
 }
 
-export const onSubmit = async (prevState: State, payload: FormData) => {
-  const data = {
-    email: payload.get("email"),
-    username: payload.get("username"),
-    password: payload.get("password"),
-  };
-  const clientData = {
-    email: typeof data?.email === "string" ? data.email : "",
-    username: typeof data?.username === "string" ? data.username : "",
-    password: typeof data?.password === "string" ? data.password : "",
-  };
-  const result = formSchema.safeParse(data);
-  if (!result.success) {
-    return {
-      requested: true,
-      data: clientData,
-      errors: result.error.flatten(),
-    };
-  }
-  return {
-    requested: true,
-    data: clientData,
-    errors: undefined,
-  };
-};
+export type tweetCoutnt = Prisma.PromiseReturnType<typeof getTweetCount>;
+export type tweet = Prisma.PromiseReturnType<typeof getTweet>;
+export type tweets = Prisma.PromiseReturnType<typeof getTweets>;
