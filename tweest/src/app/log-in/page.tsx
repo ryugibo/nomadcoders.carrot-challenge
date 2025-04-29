@@ -6,13 +6,17 @@ import { login } from "./action";
 import FormButton from "@/components/form-button";
 import { EnvelopeIcon, KeyIcon } from "@heroicons/react/24/solid";
 import { PASSWORD_MIN_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/constants";
+import Link from "next/link";
+import Logo from "@/components/logo";
 
 export default function Login() {
   const [state, action] = useActionState(login, null);
   return (
-    <div className="flex flex-col gap-10 py-8 px-6">
-      <div className="flex flex-col gap-2 *:font-medium">
-        <h1 className="text-2xl">안녕하세요</h1>
+    <div className="flex flex-col gap-10 py-8 px-6 h-screen justify-center">
+      <div className="flex flex-col gap-2 items-center *:font-medium">
+        <Logo />
+        <h1 className="text-4xl">Tweest</h1>
+        <h2 className="text-2xl">Tweest에 어서오세요!</h2>
         <h2 className="text-xl">사용자 이름과 암호로 로그인하세요!</h2>
       </div>
       <form action={action} className="flex flex-col gap-3">
@@ -38,6 +42,9 @@ export default function Login() {
         </FormInput>
         <FormButton text="로그인" />
       </form>
+      <Link href="/create-account" className="text-center">
+        아직 계정이 없으신가요? 가입하러 가기
+      </Link>
     </div>
   );
 }
