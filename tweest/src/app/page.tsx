@@ -1,16 +1,13 @@
 "use client";
 
-import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
-
+import Logo from "@/components/logo";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-between min-h-screen p-6">
       <div className="my-auto flex flex-col items-center gap-2 *:font-medium">
-        <span className="text-9xl w-full">
-          <PaperAirplaneIcon />
-        </span>
+        <Logo />
         <h1 className="text-4xl">Tweest</h1>
         <h2 className="text-2xl">Tweest에 어서오세요!</h2>
       </div>
