@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
-import { z } from "zod";
+import { typeToFlattenedError, z } from "zod";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
@@ -62,7 +62,15 @@ const formSchema = z
     }
   });
 
-export async function createAccount(prevState: any, formData: FormData) {
+type State =
+  | typeToFlattenedError<{
+      username: string;
+      password: string;
+      confirmPassword: string;
+    }>
+  | undefined;
+
+export async function createAccount(prevState: State, formData: FormData) {
   const data = {
     username: formData.get("username"),
     password: formData.get("password"),
@@ -84,5 +92,5 @@ export async function createAccount(prevState: any, formData: FormData) {
   session.id = user.id;
   await session.save();
 
-  redirect("/profile");
+  redirect("/");
 }

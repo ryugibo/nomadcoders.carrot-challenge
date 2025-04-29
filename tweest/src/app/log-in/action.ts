@@ -26,7 +26,17 @@ const formSchema = z.object({
     .min(PASSWORD_MIN_LENGTH, "암호는 6글자 이상이어야 합니다."),
 });
 
-export const login = async (prevState: any, formData: FormData) => {
+export const login = async (
+  prevState:
+    | {
+        fieldErrors: {
+          username?: string[];
+          password?: string[];
+        };
+      }
+    | undefined,
+  formData: FormData
+) => {
   const data = {
     username: formData.get("username"),
     password: formData.get("password"),
@@ -56,5 +66,5 @@ export const login = async (prevState: any, formData: FormData) => {
   const session = await getSession();
   session.id = user!.id;
   await session.save();
-  redirect("/profile");
+  redirect("/");
 };
