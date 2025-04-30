@@ -18,34 +18,34 @@ export default function Logo(props: SVGAttributes<SVGElement>) {
                C45 135, 70 160, 105 160"
         fill="none"
         stroke="#3498db"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
 
       <path
         d="M145 95 L170 70"
         stroke="#3498db"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
       <path
         d="M170 70 L155 70 M170 70 L170 85"
         stroke="#3498db"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
 
       <path
         d="M45 100 L20 125"
         stroke="#3498db"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
       <path
         d="M20 125 L35 125 M20 125 L20 110"
         stroke="#3498db"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
     </svg>
   );
