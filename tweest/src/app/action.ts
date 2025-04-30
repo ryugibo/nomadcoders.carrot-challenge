@@ -1,5 +1,31 @@
+"use server";
+
 import db from "@/lib/db";
+import { getSession } from "@/lib/session";
 import { Prisma } from "@prisma/client";
+import { redirect } from "next/navigation";
+import { z } from "zod";
+
+const tweetSchema = z.object({
+  tweet: z.string().min(1, "Tweet 내용이 비어있습니다."),
+});
+export async function addTweet(_: any, formData: FormData) {
+  const data = {
+    tweet: formData.get("tweet"),
+  };
+  const result = await tweetSchema.safeParse(data);
+  if (!result.success) {
+    return result.error.flatten();
+  }
+  const session = await getSession();
+  if (!session.id) {
+    return;
+  }
+  await db.tweet.create({
+    data: { tweet: result.data.tweet, user: { connect: { id: session.id } } },
+  });
+  redirect("/");
+}
 
 export async function getTweetCount() {
   return await db.tweet.count();
