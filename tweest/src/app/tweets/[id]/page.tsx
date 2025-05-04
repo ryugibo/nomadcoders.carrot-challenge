@@ -5,6 +5,7 @@ import { formatToTimeAgo } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import { unstable_cache as nextCache } from "next/cache";
 import db from "@/lib/db";
+import AddComment from "@/components/add-comment";
 
 async function getResponses(tweetId: number) {
   const responses = await db.response.findMany({
@@ -63,6 +64,7 @@ export default async function TweetDetail({
       </div>
       <LikeButton isLiked={isLiked} likeCount={likeCount} tweetId={tweet.id} />
       {tweet!.tweet}
+      <AddComment tweetId={tweet.id} />
       {responses.map((response, index) => (
         <div key={index}>
           {formatToTimeAgo(response.created_at)} {response.user.username}:{" "}
