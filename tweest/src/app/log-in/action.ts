@@ -51,6 +51,7 @@ export const login = async (
     },
     select: {
       id: true,
+      username: true,
       password: true,
     },
   });
@@ -65,6 +66,7 @@ export const login = async (
   }
   const session = await getSession();
   session.id = user!.id;
+  session.username = user!.username;
   await session.save();
   redirect("/");
 };
