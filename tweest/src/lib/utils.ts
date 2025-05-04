@@ -1,5 +1,6 @@
-export function formatToTimeAgo(date: Date): string {
-  const time = date.getTime();
+export function formatToTimeAgo(date: Date | string): string {
+  let time =
+    typeof date === "string" ? new Date(date).getTime() : date.getTime();
   const now = new Date().getTime();
   const diff = time - now;
 

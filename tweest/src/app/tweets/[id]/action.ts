@@ -30,6 +30,7 @@ export async function addComment(
       comment: result.data.comment,
     },
   });
+  revalidateTag(`responses-${tweetId}`);
   return { tweetId, errors: undefined };
 }
 

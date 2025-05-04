@@ -19,6 +19,13 @@ async function getResponses(tweetId: number) {
 
   return responses;
 }
+
+async function getCachedResponses(tweetId: number) {
+  const cachedOperation = nextCache(getResponses, ["responses"], {
+    tags: [`responses-${tweetId}`],
+  });
+  return cachedOperation(tweetId!);
+}
 async function getLikeStatus(tweetId: number, userId: number) {
   const isLiked = Boolean(
     await db.like.findUnique({
@@ -55,7 +62,8 @@ export default async function TweetDetail({
     return notFound();
   }
   const { likeCount, isLiked } = await getCachedLikeStatus(tweet.id);
-  const responses = await getResponses(tweet.id);
+  const responses = await getCachedResponses(tweet.id);
+  const session = await getSession();
   return (
     <div className="flex flex-col gap-5 m-5">
       <div className="flex flex-row justify-between">
@@ -64,13 +72,11 @@ export default async function TweetDetail({
       </div>
       <LikeButton isLiked={isLiked} likeCount={likeCount} tweetId={tweet.id} />
       {tweet!.tweet}
-      <AddComment tweetId={tweet.id} />
-      {responses.map((response, index) => (
-        <div key={index}>
-          {formatToTimeAgo(response.created_at)} {response.user.username}:{" "}
-          {response.comment}
-        </div>
-      ))}
+      <AddComment
+        tweetId={tweet.id}
+        username={session.username!}
+        responses={responses}
+      />
     </div>
   );
 }

@@ -86,10 +86,11 @@ export async function createAccount(prevState: State, formData: FormData) {
       username: result.data.username,
       password: hashedPassword,
     },
-    select: { id: true },
+    select: { id: true, username: true },
   });
   const session = await getSession();
   session.id = user.id;
+  session.username = user.username;
   await session.save();
 
   redirect("/");
