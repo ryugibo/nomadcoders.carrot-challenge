@@ -38,7 +38,6 @@ export async function getTweet(id: number) {
       tweet: true,
       created_at: true,
       user: { select: { username: true } },
-      Response: true,
     },
   });
 }

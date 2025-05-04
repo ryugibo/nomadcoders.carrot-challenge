@@ -14,14 +14,15 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique
+  id         Int        @id @default(autoincrement())
+  username   String     @unique
   password   String
   bio        String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
   Tweet      Tweet[]
   Like       Like[]
+  Response   Response[]
 }
 
 model Tweet {
@@ -49,6 +50,8 @@ model Response {
   id         Int      @id @default(autoincrement())
   created_at DateTime @default(now())
   comment    String
+  user       User     @relation(fields: [userId], references: [id])
   tweet      Tweet    @relation(fields: [tweetId], references: [id])
   tweetId    Int
+  userId     Int
 }
