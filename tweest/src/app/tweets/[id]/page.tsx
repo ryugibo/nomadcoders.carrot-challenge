@@ -22,6 +22,9 @@ export default async function TweetDetail({
         <div>{formatToTimeAgo(tweet.created_at)}</div>
       </div>
       {tweet!.tweet}
+      {tweet.Response.map((response) => (
+        <div key={response.id}>{response.comment}</div>
+      ))}
     </div>
   );
 }
