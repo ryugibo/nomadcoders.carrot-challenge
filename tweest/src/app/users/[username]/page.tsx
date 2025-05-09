@@ -48,7 +48,7 @@ export default async function UserProfile({
       <span>Bio: {user.bio}</span>
       <span>Created at: {user.created_at.toDateString()}!</span>
       <span>Updated at: {user.updated_at.toDateString()}!</span>
-      {username === session.username && (
+      {user.id === session.id && (
         <form action={logOut}>
           <FormButton text={"로그아웃"} />
         </form>

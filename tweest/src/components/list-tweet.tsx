@@ -1,5 +1,6 @@
 import { formatToTimeAgo } from "@/lib/utils";
 import Link from "next/link";
+import { HeartIcon, ChatBubbleOvalLeftIcon } from "@heroicons/react/24/outline";
 
 interface ListTweetProps {
   id: number;
@@ -14,18 +15,23 @@ export default function ListTweet({
   username,
 }: ListTweetProps) {
   return (
-    <div className="border-2 w-full border-neutral-800 py-3">
-      <div className="flex flex-row justify-between mx-3">
+    <div className="w-full border-neutral-800 mx-3">
+      <div className="flex flex-row justify-between items-center">
         <Link href={`/users/${username}`}>
-          <div className="hover:underline">{username}</div>
+          <div className="hover:underline text-2xl font-bold">{username}</div>
         </Link>
+        <hr className="flex-1/2 mx-3" />
         <div>{formatToTimeAgo(created_at)}</div>
       </div>
       <Link href={`/tweets/${id}`}>
-        <div className=" bg-neutral-600 rounded-md py-4 px-2 mx-2 text-white">
-          {tweet}
-        </div>
+        <div className="py-4 px-2 mx-2 hover:bg-neutral-200">{tweet}</div>
       </Link>
+      <div className="*:size-5 flex flex-row">
+        <HeartIcon />
+        <span>3</span>
+        <ChatBubbleOvalLeftIcon />
+        <span>3</span>
+      </div>
     </div>
   );
 }
