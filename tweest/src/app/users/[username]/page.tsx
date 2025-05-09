@@ -39,6 +39,11 @@ export default async function UserProfile({
           <Link href="/">&larr;</Link>
         </span>
         <span>{user.username}</span>
+        {username === session.username && (
+          <span className="absolute right-0">
+            <Link href={`./${username}/edit`}>편집</Link>
+          </span>
+        )}
       </div>
       <span>Bio: {user.bio}</span>
       <span>Created at: {user.created_at.toDateString()}!</span>
