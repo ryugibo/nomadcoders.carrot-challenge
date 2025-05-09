@@ -21,7 +21,6 @@ export default function AddComment({
     user: { username: string };
   }[];
 }) {
-  console.log(typeof responses[0].created_at);
   const [responseState, reducerFn] = useOptimistic(
     responses,
     (
