@@ -5,7 +5,8 @@ export function formatToTimeAgo(date: Date | string): string {
   const diff = time - now;
 
   const formatter = new Intl.RelativeTimeFormat("ko");
-  const units: [number, "hours" | "minutes" | "seconds"][] = [
+  const units: [number, "hours" | "minutes" | "seconds" | "days"][] = [
+    [60 * 60 * 1000 * 24, "days"],
     [60 * 60 * 1000, "hours"],
     [60 * 1000, "minutes"],
     [1000, "seconds"],
