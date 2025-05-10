@@ -12,13 +12,10 @@ import Logo from "@/components/logo";
 export default function CreateAccount() {
   const [state, action] = useActionState(createAccount, undefined);
   return (
-    <div className="flex flex-col gap-10 py-8 px-6 justify-center h-screen">
-      <div className="flex flex-col gap-2 *:font-medium items-center">
-        <Logo />
-        <h1 className="text-4xl">Tweest</h1>
-        <h2 className="text-2xl">Tweest에 어서오세요!</h2>
-        <h2 className="text-xl">사용자 이름과 암호로 로그인하세요!</h2>
-      </div>
+    <div className="flex flex-col gap-2 *:font-medium items-center">
+      <h1 className="text-4xl">Tweest</h1>
+      <h2 className="text-2xl">Tweest에 어서오세요!</h2>
+      <h2 className="text-xl">사용자 이름과 암호로 로그인하세요!</h2>
       <form action={action} className="flex flex-col gap-3">
         <FormInput
           name="username"
