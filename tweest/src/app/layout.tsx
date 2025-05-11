@@ -29,8 +29,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative flex flex-col items-center mx-10`}
       >
-        {modal}
-        {children}
+        <div className="w-full sm:w-2xl">
+          {modal}
+          {children}
+        </div>
       </body>
     </html>
   );

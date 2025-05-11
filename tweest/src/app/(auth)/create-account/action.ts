@@ -11,10 +11,6 @@ import {
   PASSWORD_REGEX_ERROR,
 } from "@/lib/constants";
 
-function checkUsername(username: string) {
-  return !username.includes("potato");
-}
-
 const checkPasswords = ({
   password,
   confirmPassword,
@@ -32,8 +28,7 @@ const formSchema = z
       })
       .toLowerCase()
       .trim()
-      .transform((username) => username)
-      .refine(checkUsername, "No potatoes allowed!"),
+      .transform((username) => username),
     password: z
       .string({
         required_error: "암호는 필수입니다.",

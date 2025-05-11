@@ -1,4 +1,3 @@
-import FormButton from "@/components/form-button";
 import db from "@/lib/db";
 import { getSession } from "@/lib/session";
 import Link from "next/link";
@@ -33,26 +32,33 @@ export default async function UserProfile({
     redirect("/");
   };
   return (
-    <div className="flex flex-col items-center mt-10 mx-5">
+    <div className="flex flex-col items-center mt-10 mx-5 w-full">
       <div className="flex justify-center w-full relative">
         <span className="absolute left-0">
           <Link href="/">&larr;</Link>
         </span>
         <span>{user.username}</span>
-        {username === session.username && (
-          <span className="absolute right-0">
-            <Link href={`./${username}/edit`}>편집</Link>
+        {user.id === session.id && (
+          <span className="absolute right-0 flex gap-5">
+            <Link
+              className="hover:bg-neutral-300 px-2"
+              href={`./${username}/edit`}
+            >
+              편집
+            </Link>
+            <form action={logOut}>
+              <button className="hover:cursor-pointer hover:bg-neutral-300 px-2">
+                로그아웃
+              </button>
+            </form>
           </span>
         )}
       </div>
-      <span>Bio: {user.bio}</span>
-      <span>Created at: {user.created_at.toDateString()}!</span>
-      <span>Updated at: {user.updated_at.toDateString()}!</span>
-      {user.id === session.id && (
-        <form action={logOut}>
-          <FormButton text={"로그아웃"} />
-        </form>
-      )}
+      <div className="w-full flex flex-col">
+        <span className="text-4xl font-bold underline">{user.username}</span>
+        <div className="h-10" />
+        <span className="">bb: {user.bio}</span>
+      </div>
     </div>
   );
 }
