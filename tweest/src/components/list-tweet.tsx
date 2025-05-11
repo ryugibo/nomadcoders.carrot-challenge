@@ -15,7 +15,7 @@ export default function ListTweet({
   username,
 }: ListTweetProps) {
   return (
-    <div className="w-full border-neutral-800 mx-3">
+    <div className="w-full border-neutral-800">
       <div className="flex flex-row justify-between items-center">
         <Link href={`/users/${username}`}>
           <div className="hover:underline text-2xl font-bold">{username}</div>
@@ -24,7 +24,9 @@ export default function ListTweet({
         <div>{formatToTimeAgo(created_at)}</div>
       </div>
       <Link href={`/tweets/${id}`}>
-        <div className="py-4 px-2 mx-2 hover:bg-neutral-200">{tweet}</div>
+        <div className="py-4 px-2 mx-2 hover:bg-neutral-200 text-wrap break-words">
+          {tweet}
+        </div>
       </Link>
       <div className="*:size-5 flex flex-row">
         <HeartIcon />

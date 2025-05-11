@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="ko-KR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative flex flex-col items-center mx-10`}
       >
         {modal}
         {children}

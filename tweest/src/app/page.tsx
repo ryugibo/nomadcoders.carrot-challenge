@@ -11,7 +11,7 @@ export default async function Home() {
   const session = await getSession();
 
   return (
-    <div className="flex flex-col items-center justify-between w-dvw min-h-screen h-screen gap-8 overflow-x-hidden">
+    <div className="flex flex-col items-center justify-between w-full sm:w-2xl min-h-screen h-screen gap-8 overflow-x-hidden">
       <Link href={`/users/${session.username}`}>{session.username}</Link>
       <AddTweet />
       <TweetList
