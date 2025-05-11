@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
+import TabBar from "@/components/tab-bar";
+import { getSession } from "@/lib/session";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,13 +19,14 @@ export const metadata: Metadata = {
   description: "a modern Twitter-inspired microblog platform",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   modal,
 }: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
+  const session = await getSession();
   return (
     <html lang="ko-KR">
       <body
@@ -33,6 +36,7 @@ export default function RootLayout({
           {modal}
           {children}
         </div>
+        <TabBar username={session.username!} />
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { searchKeyword } from "@/app/search/action";
+import { searchKeyword } from "@/app/(tab)/search/action";
 import FormButton from "./form-button";
 import FormInput from "./form-input";
 import { useActionState } from "react";

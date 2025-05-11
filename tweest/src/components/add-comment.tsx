@@ -4,7 +4,7 @@ import FormButton from "./form-button";
 import FormInput from "./form-input";
 import { useActionState, useOptimistic } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { addComment } from "@/app/tweets/[id]/action";
+import { addComment } from "@/app/(tab)/tweets/[id]/action";
 import { formatToTimeAgo } from "@/lib/utils";
 import { getSession } from "@/lib/session";
 

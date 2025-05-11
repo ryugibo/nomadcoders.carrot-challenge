@@ -1,5 +1,5 @@
 import AddTweet from "@/components/add-tweet";
-import { getTweets } from "./action";
+import { getTweets } from "../action";
 import TweetList from "@/components/tweet-list";
 import { TWEETS_PER_PAGE } from "@/lib/constants";
 

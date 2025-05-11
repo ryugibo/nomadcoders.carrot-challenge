@@ -1,4 +1,4 @@
-import { getTweets } from "../action";
+import { getTweets } from "../../action";
 import { TWEETS_PER_PAGE } from "@/lib/constants";
 import TweetList from "@/components/tweet-list";
 import { Prisma } from "@prisma/client";
