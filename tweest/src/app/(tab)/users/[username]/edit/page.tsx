@@ -52,7 +52,7 @@ export default function UsersEdit({
         >
           <EnvelopeIcon className="size-4" />
         </FormInput>
-        <textarea name="bio" defaultValue={bio || "ww"}></textarea>
+        <textarea name="bio" defaultValue={bio || ""}></textarea>
         <div className="flex w-full gap-5">
           <button
             className="flex-1/2 bg-neutral-300 rounded-xl py-2 cursor-pointer hover:bg-neutral-500 hover:text-white"
