@@ -10,7 +10,7 @@ export default async function Search({
   searchParams: Promise<{ keyword?: string }>;
 }) {
   const { keyword } = await searchParams;
-  var queryWhere: Prisma.TweetWhereInput | undefined = undefined;
+  let queryWhere: Prisma.TweetWhereInput | undefined = undefined;
   if (keyword) {
     queryWhere = {
       tweet: { contains: keyword },

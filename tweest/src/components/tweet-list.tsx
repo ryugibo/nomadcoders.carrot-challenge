@@ -49,7 +49,7 @@ export default function TweetList({
     return () => {
       observer.disconnect();
     };
-  }, [page]);
+  }, [page, queryWhere]);
 
   return (
     <div className="h-full w-full relative">

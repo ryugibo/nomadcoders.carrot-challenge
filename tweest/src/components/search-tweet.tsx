@@ -7,7 +7,7 @@ import { useActionState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 export default function SearchTweet() {
-  const [state, action] = useActionState(searchKeyword, null);
+  const [state, action] = useActionState(searchKeyword, undefined);
   return (
     <form action={action} className="flex flex-row w-full">
       <div className="w-full">

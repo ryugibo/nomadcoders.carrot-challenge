@@ -1,10 +1,16 @@
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { typeToFlattenedError, z } from "zod";
+
+type State =
+  | typeToFlattenedError<{
+      keyword: string;
+    }>
+  | undefined;
 
 const searchSchema = z.object({
   keyword: z.string().min(1, "검색어가 비어있습니다."),
 });
-export async function searchKeyword(_: any, formData: FormData) {
+export async function searchKeyword(_: State, formData: FormData) {
   const data = {
     keyword: formData.get("keyword"),
   };

@@ -3,15 +3,20 @@
 import db from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { revalidateTag } from "next/cache";
-import { z } from "zod";
+import { typeToFlattenedError, z } from "zod";
 
 const commentSchema = z.object({
   comment: z.string().min(1, "Comment 내용이 비어있습니다."),
 });
-export async function addComment(
-  { tweetId, errors }: { tweetId: number; errors?: any },
-  formData: FormData
-) {
+
+export interface State {
+  tweetId: number;
+  errors?: typeToFlattenedError<{
+    comment: string;
+  }>;
+}
+
+export async function addComment({ tweetId }: State, formData: FormData) {
   const data = {
     comment: formData.get("comment"),
   };
@@ -21,7 +26,7 @@ export async function addComment(
   }
   const session = await getSession();
   if (!session.id) {
-    return { tweetId, errors: undefined };
+    return { tweetId };
   }
   await db.response.create({
     data: {
@@ -31,7 +36,7 @@ export async function addComment(
     },
   });
   revalidateTag(`responses-${tweetId}`);
-  return { tweetId, errors: undefined };
+  return { tweetId };
 }
 
 export async function likePost(tweetId: number) {
@@ -44,7 +49,9 @@ export async function likePost(tweetId: number) {
       },
     });
     revalidateTag(`like-status-${tweetId}`);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function dislikePost(tweetId: number) {
@@ -59,5 +66,7 @@ export async function dislikePost(tweetId: number) {
       },
     });
     revalidateTag(`like-status-${tweetId}`);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }

@@ -1,6 +1,6 @@
 "use server";
 
-import { coerce, typeToFlattenedError, z } from "zod";
+import { typeToFlattenedError, z } from "zod";
 import bcrypt from "bcrypt";
 import db from "@/lib/db";
 import { getSession } from "@/lib/session";
@@ -10,7 +10,6 @@ import {
   PASSWORD_REGEX,
   PASSWORD_REGEX_ERROR,
 } from "@/lib/constants";
-import { resourceLimits } from "worker_threads";
 
 const changeAccountInfoFormSchema = z.object({
   email: z.string().email().trim().toLowerCase(),

@@ -4,12 +4,18 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { typeToFlattenedError, z } from "zod";
+
+type State =
+  | typeToFlattenedError<{
+      tweet: string;
+    }>
+  | undefined;
 
 const tweetSchema = z.object({
   tweet: z.string().min(1, "Tweet 내용이 비어있습니다."),
 });
-export async function addTweet(_: any, formData: FormData) {
+export async function addTweet(_: State, formData: FormData) {
   const data = {
     tweet: formData.get("tweet"),
   };
