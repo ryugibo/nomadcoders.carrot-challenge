@@ -42,7 +42,13 @@ export default function TweetList({
     <div className="h-full w-full relative">
       <div className="flex flex-col gap-5">
         {tweets.map((tweet) => (
-          <ListTweet key={tweet.id} username={tweet.user.username} {...tweet} />
+          <ListTweet
+            key={tweet.id}
+            username={tweet.user.username}
+            countLike={tweet._count.Like}
+            countResponse={tweet._count.Response}
+            {...tweet}
+          />
         ))}
       </div>
       <div className="absolute bottom-0 flex flex-row w-full justify-between">

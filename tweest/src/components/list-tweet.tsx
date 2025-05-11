@@ -7,12 +7,16 @@ interface ListTweetProps {
   tweet: string;
   created_at: Date;
   username: string;
+  countLike: number;
+  countResponse: number;
 }
 export default function ListTweet({
   id,
   tweet,
   created_at,
   username,
+  countLike,
+  countResponse,
 }: ListTweetProps) {
   return (
     <div className="w-full border-neutral-800">
@@ -30,9 +34,9 @@ export default function ListTweet({
       </Link>
       <div className="*:size-5 flex flex-row">
         <HeartIcon />
-        <span>3</span>
+        <span>{countLike}</span>
         <ChatBubbleOvalLeftIcon />
-        <span>3</span>
+        <span>{countResponse}</span>
       </div>
     </div>
   );
