@@ -41,8 +41,13 @@ export async function getTweet(id: number) {
     },
   });
 }
-export async function getTweets(page: number, amount: number) {
+export async function getTweets(
+  page: number,
+  amount: number,
+  queryWhere?: Prisma.TweetWhereInput
+) {
   const tweets = await db.tweet.findMany({
+    where: queryWhere,
     select: {
       id: true,
       tweet: true,

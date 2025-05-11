@@ -1,16 +1,16 @@
-import db from "@/lib/db";
+import { redirect } from "next/navigation";
+import { z } from "zod";
 
-export async function searchTweets(keyword: string) {
-  const tweets = await db.tweet.findMany({
-    where: { tweet: { contains: keyword } },
-    select: {
-      id: true,
-      tweet: true,
-      created_at: true,
-      user: { select: { username: true } },
-      _count: { select: { Like: true, Response: true } },
-    },
-    orderBy: { created_at: "desc" },
-  });
-  return tweets;
+const searchSchema = z.object({
+  keyword: z.string().min(1, "검색어가 비어있습니다."),
+});
+export async function searchKeyword(_: any, formData: FormData) {
+  const data = {
+    keyword: formData.get("keyword"),
+  };
+  const result = await searchSchema.safeParse(data);
+  if (!result.success) {
+    return result.error.flatten();
+  }
+  redirect(`/search?keyword=${result.data.keyword}`);
 }

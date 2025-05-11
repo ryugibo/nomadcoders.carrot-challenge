@@ -7,4 +7,4 @@ export const PASSWORD_REGEX_ERROR =
 
 export const USERNAME_MIN_LENGTH = 3;
 
-export const TWEETS_PER_PAGE = 5;
+export const TWEETS_PER_PAGE = 10;
