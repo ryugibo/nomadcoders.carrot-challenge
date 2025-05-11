@@ -1,8 +1,0 @@
--- CreateTable
-CREATE TABLE "Response" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "comment" TEXT NOT NULL,
-    "tweetId" INTEGER NOT NULL,
-    CONSTRAINT "Response_tweetId_fkey" FOREIGN KEY ("tweetId") REFERENCES "Tweet" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
