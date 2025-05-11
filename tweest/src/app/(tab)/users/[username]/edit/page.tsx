@@ -17,7 +17,7 @@ export default function UsersEdit({
   const email = searchParams.get("email");
   const bio = searchParams.get("bio");
 
-  const { username } = use(params);
+  const username = decodeURIComponent(use(params).username);
   const [changeAccountInfoState, changeAccountInfoAction] = useActionState(
     changeAccountInfo,
     undefined

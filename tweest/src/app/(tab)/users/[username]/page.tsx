@@ -19,7 +19,7 @@ export default async function UserProfile({
 }: {
   params: Promise<{ username: string }>;
 }) {
-  const username = (await params).username;
+  const username = decodeURIComponent((await params).username);
   const user = await getUser(username);
   if (!user) {
     notFound();

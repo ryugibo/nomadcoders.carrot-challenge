@@ -89,7 +89,7 @@ export async function changeAccountInfo(
   session.username = user!.username;
   session.email = user!.email;
   await session.save();
-  redirect(`/users/${session.username}`);
+  redirect(`/users/${encodeURIComponent(session.username)}`);
 }
 
 export async function changePassword(
