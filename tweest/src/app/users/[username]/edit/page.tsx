@@ -4,15 +4,21 @@ import { use, useActionState } from "react";
 import { changeAccountInfo, changePassword } from "./action";
 import FormInput from "@/components/form-input";
 import { PASSWORD_MIN_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/constants";
-import { KeyIcon, UserIcon } from "@heroicons/react/24/solid";
+import { EnvelopeIcon, KeyIcon, UserIcon } from "@heroicons/react/24/solid";
 import FormButton from "@/components/form-button";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function UsersEdit({
   params,
 }: {
   params: Promise<{ username: string }>;
 }) {
-  const username = use(params).username;
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+
+  console.log(email);
+
+  const { username } = use(params);
   const [changeAccountInfoState, changeAccountInfoAction] = useActionState(
     changeAccountInfo,
     undefined
@@ -31,13 +37,33 @@ export default function UsersEdit({
           type="text"
           placeholder="사용자 이름"
           required
+          defaultValue={username}
           errors={changeAccountInfoState?.fieldErrors.username}
           minLength={USERNAME_MIN_LENGTH}
         >
           <UserIcon className="size-4" />
         </FormInput>
-        <button type="button">취소</button>
-        <FormButton text="계정 정보 변경" />
+        <FormInput
+          name="email"
+          type="text"
+          placeholder="이메일"
+          required
+          defaultValue={email || ""}
+          errors={changeAccountInfoState?.fieldErrors.email}
+        >
+          <EnvelopeIcon className="size-4" />
+        </FormInput>
+        <div className="flex w-full gap-5">
+          <button
+            className="flex-1/2 bg-neutral-300 rounded-xl py-2 cursor-pointer hover:bg-neutral-500 hover:text-white"
+            type="reset"
+          >
+            취소
+          </button>
+          <button className="flex-1/2 bg-neutral-300 rounded-xl py-2 cursor-pointer hover:bg-neutral-500 hover:text-white">
+            계정 정보 변경
+          </button>
+        </div>
       </form>
       <div className="my-10" />
       <div className="text-3xl">비밀번호 변경</div>

@@ -42,7 +42,10 @@ export default async function UserProfile({
           <span className="absolute right-0 flex gap-5">
             <Link
               className="hover:bg-neutral-300 px-2"
-              href={`./${username}/edit`}
+              href={{
+                pathname: `./${username}/edit`,
+                query: { email: user.email },
+              }}
             >
               편집
             </Link>
@@ -56,8 +59,8 @@ export default async function UserProfile({
       </div>
       <div className="w-full flex flex-col">
         <span className="text-4xl font-bold underline">{user.username}</span>
-        <div className="h-10" />
-        <span className="">bb: {user.bio}</span>
+        <span>email: {user.email}</span>
+        <span className="">bio: {user.bio}</span>
       </div>
     </div>
   );

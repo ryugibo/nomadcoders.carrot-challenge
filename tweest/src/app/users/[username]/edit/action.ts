@@ -12,6 +12,7 @@ import {
 } from "@/lib/constants";
 
 const changeAccountInfoFormSchema = z.object({
+  email: z.string().email().trim().toLowerCase(),
   username: z
     .string({
       invalid_type_error: "사용자 이름은 문자열이어야 합니다.",
@@ -47,6 +48,7 @@ const changePasswordFormSchema = z
 type ChangeAccountInfoState =
   | typeToFlattenedError<{
       username: string;
+      email: string;
     }>
   | undefined;
 
@@ -63,6 +65,7 @@ export async function changeAccountInfo(
 ) {
   const data = {
     username: formData.get("username"),
+    email: formData.get("email"),
   };
   const result = await changeAccountInfoFormSchema.safeParseAsync(data);
   if (!result.success) {
@@ -71,12 +74,16 @@ export async function changeAccountInfo(
   const session = await getSession();
   const user = await db.user.update({
     where: { id: session.id! },
-    data: { username: result.data.username },
-    select: { id: true, username: true },
+    data: {
+      username: result.data.username,
+      email: result.data.email,
+    },
+    select: { id: true, username: true, email: true },
   });
 
   session.id = user!.id;
   session.username = user!.username;
+  session.email = user!.email;
   await session.save();
   redirect(`/users/${session.username}`);
 }

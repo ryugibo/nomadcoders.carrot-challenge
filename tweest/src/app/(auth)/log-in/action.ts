@@ -7,20 +7,8 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
 
-const checkUsernameExists = async (username: string) => {
-  const user = await db.user.findUnique({
-    where: { username: username },
-    select: { id: true },
-  });
-  return Boolean(user);
-};
-
 const formSchema = z.object({
-  username: z
-    .string({ required_error: "사용자 이름은 필수입니다." })
-    .min(3, "사용자 이름은 3글자 이상이어야 합니다.")
-    .toLowerCase()
-    .refine(checkUsernameExists, "등록되지 않은 사용자 이름입니다."),
+  email: z.string().email().trim().toLowerCase(),
   password: z
     .string({ required_error: "암호는 필수입니다." })
     .min(PASSWORD_MIN_LENGTH, "암호는 6글자 이상이어야 합니다."),
@@ -30,7 +18,7 @@ export const login = async (
   prevState:
     | {
         fieldErrors: {
-          username?: string[];
+          email?: string[];
           password?: string[];
         };
       }
@@ -38,7 +26,7 @@ export const login = async (
   formData: FormData
 ) => {
   const data = {
-    username: formData.get("username"),
+    email: formData.get("email"),
     password: formData.get("password"),
   };
   const result = await formSchema.safeParseAsync(data);
@@ -47,10 +35,11 @@ export const login = async (
   }
   const user = await db.user.findUnique({
     where: {
-      username: result.data.username,
+      email: result.data.email,
     },
     select: {
       id: true,
+      email: true,
       username: true,
       password: true,
     },
@@ -59,7 +48,7 @@ export const login = async (
   if (!ok) {
     return {
       fieldErrors: {
-        username: [],
+        email: [],
         password: ["Wrong password."],
       },
     };
@@ -67,6 +56,7 @@ export const login = async (
   const session = await getSession();
   session.id = user!.id;
   session.username = user!.username;
+  session.email = user!.email;
   await session.save();
   redirect("/");
 };

@@ -21,6 +21,7 @@ const checkPasswords = ({
 
 const formSchema = z
   .object({
+    email: z.string().email().trim().toLowerCase(),
     username: z
       .string({
         invalid_type_error: "사용자 이름은 문자열이어야 합니다.",
@@ -59,6 +60,7 @@ const formSchema = z
 
 type State =
   | typeToFlattenedError<{
+      email: string;
       username: string;
       password: string;
       confirmPassword: string;
@@ -67,6 +69,7 @@ type State =
 
 export async function createAccount(prevState: State, formData: FormData) {
   const data = {
+    email: formData.get("email"),
     username: formData.get("username"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
@@ -78,6 +81,7 @@ export async function createAccount(prevState: State, formData: FormData) {
   const hashedPassword = await bcrypt.hash(result.data.password, 12);
   const user = await db.user.create({
     data: {
+      email: result.data.email,
       username: result.data.username,
       password: hashedPassword,
     },
