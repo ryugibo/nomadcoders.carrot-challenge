@@ -75,7 +75,6 @@ export default function AddComment({
       <div>
         {responseState.map((response, index) => (
           <div key={index}>
-            {new Date(response.created_at).toISOString()}{" "}
             {response.user.username}: {response.comment}
           </div>
         ))}

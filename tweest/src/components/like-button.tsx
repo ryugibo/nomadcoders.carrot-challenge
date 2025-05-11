@@ -35,7 +35,7 @@ export default function LikeButton({
   return (
     <form action={action}>
       <button
-        className={`flex items-center gap-2 text-neutral-400 text-sm border border-neutral-400 rounded-full p-2  transition-colors ${
+        className={`cursor-pointer flex items-center gap-2 text-neutral-400 text-sm border border-neutral-400 rounded-full p-2  transition-colors ${
           state.isLiked
             ? "bg-orange-500 text-white border-orange-500"
             : "hover:bg-neutral-800"
@@ -49,7 +49,7 @@ export default function LikeButton({
         {state.isLiked ? (
           <span>{state.likeCount}</span>
         ) : (
-          <span>좋아요 ({state.likeCount})</span>
+          <span>{state.likeCount}</span>
         )}
       </button>
     </form>
