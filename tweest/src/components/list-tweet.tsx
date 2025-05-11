@@ -32,11 +32,15 @@ export default function ListTweet({
           {tweet}
         </div>
       </Link>
-      <div className="*:size-5 flex flex-row">
-        <HeartIcon />
-        <span>{countLike}</span>
-        <ChatBubbleOvalLeftIcon />
-        <span>{countResponse}</span>
+      <div className="flex flex-row items-center gap-3">
+        <div className="flex items-center gap-1">
+          <HeartIcon className="size-7" />
+          {countLike}
+        </div>
+        <div className="flex items-center gap-1">
+          <ChatBubbleOvalLeftIcon className="size-7" />
+          {countResponse}
+        </div>
       </div>
     </div>
   );
