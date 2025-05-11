@@ -7,7 +7,7 @@ import { useActionState } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 
 export default function AddTweet() {
-  const [state, action] = useActionState(addTweet, null);
+  const [state, action] = useActionState(addTweet, undefined);
   return (
     <form action={action} className="flex flex-row w-full">
       <div className="w-full">

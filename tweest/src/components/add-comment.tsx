@@ -4,9 +4,10 @@ import FormButton from "./form-button";
 import FormInput from "./form-input";
 import { useActionState, useOptimistic } from "react";
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { addComment } from "@/app/tweets/[id]/action";
-import { formatToTimeAgo } from "@/lib/utils";
-import { getSession } from "@/lib/session";
+import {
+  addComment,
+  State as AddCommentState,
+} from "@/app/(tab)/tweets/[id]/action";
 
 export default function AddComment({
   tweetId,
@@ -21,7 +22,6 @@ export default function AddComment({
     user: { username: string };
   }[];
 }) {
-  console.log(typeof responses[0].created_at);
   const [responseState, reducerFn] = useOptimistic(
     responses,
     (
@@ -41,10 +41,7 @@ export default function AddComment({
     }
   );
   const [state, action] = useActionState(
-    async (
-      prevState: { tweetId: number; errors?: any },
-      formData: FormData
-    ) => {
+    async (prevState: AddCommentState, formData: FormData) => {
       reducerFn({
         comment: formData.get("comment") + "",
         created_at: new Date(),
@@ -54,7 +51,6 @@ export default function AddComment({
     },
     {
       tweetId,
-      errors: undefined,
     }
   );
   return (
@@ -76,7 +72,6 @@ export default function AddComment({
       <div>
         {responseState.map((response, index) => (
           <div key={index}>
-            {new Date(response.created_at).toISOString()}{" "}
             {response.user.username}: {response.comment}
           </div>
         ))}

@@ -1,65 +1,76 @@
 "use client";
 
-import { getTweetCount, getTweets, tweetCoutnt, tweets } from "@/app/action";
-import { useState } from "react";
-import {
-  ArrowLeftCircleIcon,
-  ArrowRightCircleIcon,
-} from "@heroicons/react/24/solid";
+import { getTweets, tweets } from "@/app/action";
+import { useEffect, useRef, useState } from "react";
 import { TWEETS_PER_PAGE } from "@/lib/constants";
 import ListTweet from "./list-tweet";
+import { Prisma } from "@prisma/client";
 
 export default function TweetList({
   initialTweets,
-  initialTweetCount,
+  queryWhere,
 }: {
   initialTweets: tweets;
-  initialTweetCount: tweetCoutnt;
+  queryWhere?: Prisma.TweetWhereInput;
 }) {
   const [tweets, setTweets] = useState(initialTweets);
-  const [tweetCount, setTweetCount] = useState(initialTweetCount);
+  const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(0);
-
-  const onClickLeft = async () => {
-    const newPage = Math.max(0, page - 1);
-    if (newPage != page) {
-      setTweets(await getTweets(newPage, TWEETS_PER_PAGE));
-      setTweetCount(await getTweetCount());
-      setPage(newPage);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const trigger = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async (entries, observer) => {
+        const element = entries[0];
+        if (element.isIntersecting && trigger.current) {
+          observer.unobserve(trigger.current);
+          setIsLoading(true);
+          const newTweets = await getTweets(
+            page + 1,
+            TWEETS_PER_PAGE,
+            queryWhere
+          );
+          if (newTweets.length > 0) {
+            setPage((prev) => prev + 1);
+            setTweets((prev) => [...prev, ...newTweets]);
+          } else {
+            setIsLastPage(true);
+          }
+          setIsLoading(false);
+        }
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+    if (trigger.current) {
+      observer.observe(trigger.current);
     }
-  };
-  const onClickRight = async () => {
-    const maxPage = Math.floor((tweetCount - 1) / TWEETS_PER_PAGE);
-    const newPage = Math.min(maxPage, page + 1);
-    if (newPage != page) {
-      setTweets(await getTweets(newPage, TWEETS_PER_PAGE));
-      setTweetCount(await getTweetCount());
-      setPage(newPage);
-    }
-  };
+    return () => {
+      observer.disconnect();
+    };
+  }, [page, queryWhere]);
 
   return (
     <div className="h-full w-full relative">
       <div className="flex flex-col gap-5">
         {tweets.map((tweet) => (
-          <ListTweet key={tweet.id} username={tweet.user.username} {...tweet} />
+          <ListTweet
+            key={tweet.id}
+            username={tweet.user.username}
+            countLike={tweet._count.Like}
+            countResponse={tweet._count.Response}
+            {...tweet}
+          />
         ))}
-      </div>
-      <div className="absolute bottom-0 flex flex-row w-full justify-between">
-        <button
-          disabled={page === 0}
-          onClick={onClickLeft}
-          className="size-28 disabled:text-gray-400"
-        >
-          <ArrowLeftCircleIcon />
-        </button>
-        <button
-          disabled={page === Math.floor((tweetCount - 1) / TWEETS_PER_PAGE)}
-          onClick={onClickRight}
-          className="size-28 disabled:text-gray-400"
-        >
-          <ArrowRightCircleIcon />
-        </button>
+        {tweets.length > 0 && !isLastPage && (
+          <span
+            ref={trigger}
+            className="mb-96 text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
+          >
+            {isLoading ? "로딩 중" : "Load more"}
+          </span>
+        )}
       </div>
     </div>
   );

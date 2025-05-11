@@ -4,12 +4,18 @@ import db from "@/lib/db";
 import { getSession } from "@/lib/session";
 import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { typeToFlattenedError, z } from "zod";
+
+type State =
+  | typeToFlattenedError<{
+      tweet: string;
+    }>
+  | undefined;
 
 const tweetSchema = z.object({
   tweet: z.string().min(1, "Tweet 내용이 비어있습니다."),
 });
-export async function addTweet(_: any, formData: FormData) {
+export async function addTweet(_: State, formData: FormData) {
   const data = {
     tweet: formData.get("tweet"),
   };
@@ -41,13 +47,19 @@ export async function getTweet(id: number) {
     },
   });
 }
-export async function getTweets(page: number, amount: number) {
+export async function getTweets(
+  page: number,
+  amount: number,
+  queryWhere?: Prisma.TweetWhereInput
+) {
   const tweets = await db.tweet.findMany({
+    where: queryWhere,
     select: {
       id: true,
       tweet: true,
       created_at: true,
       user: { select: { username: true } },
+      _count: { select: { Like: true, Response: true } },
     },
     skip: page * amount,
     take: amount,

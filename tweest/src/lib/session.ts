@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 interface SessionContent {
   id?: number;
   username?: string;
+  email?: string;
 }
 
 export async function getSession() {

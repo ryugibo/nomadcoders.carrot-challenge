@@ -2,7 +2,7 @@
 import { HandThumbUpIcon as HandThumbUpSolid } from "@heroicons/react/24/solid";
 import { HandThumbUpIcon as HandThumbUpOutline } from "@heroicons/react/24/outline";
 import { useOptimistic } from "react";
-import { dislikePost, likePost } from "@/app/tweets/[id]/action";
+import { dislikePost, likePost } from "@/app/(tab)/tweets/[id]/action";
 
 interface LikeButtonProps {
   isLiked: boolean;
@@ -17,7 +17,7 @@ export default function LikeButton({
 }: LikeButtonProps) {
   const [state, reducerFn] = useOptimistic(
     { isLiked, likeCount },
-    (previousState, payload) => ({
+    (previousState) => ({
       isLiked: !previousState.isLiked,
       likeCount: previousState.isLiked
         ? previousState.likeCount - 1
@@ -35,7 +35,7 @@ export default function LikeButton({
   return (
     <form action={action}>
       <button
-        className={`flex items-center gap-2 text-neutral-400 text-sm border border-neutral-400 rounded-full p-2  transition-colors ${
+        className={`cursor-pointer flex items-center gap-2 text-neutral-400 text-sm border border-neutral-400 rounded-full p-2  transition-colors ${
           state.isLiked
             ? "bg-orange-500 text-white border-orange-500"
             : "hover:bg-neutral-800"
@@ -49,7 +49,7 @@ export default function LikeButton({
         {state.isLiked ? (
           <span>{state.likeCount}</span>
         ) : (
-          <span>좋아요 ({state.likeCount})</span>
+          <span>{state.likeCount}</span>
         )}
       </button>
     </form>

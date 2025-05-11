@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { unstable_cache as nextCache } from "next/cache";
 import db from "@/lib/db";
 import AddComment from "@/components/add-comment";
+import Link from "next/link";
 
 async function getResponses(tweetId: number) {
   const responses = await db.response.findMany({
@@ -67,6 +68,7 @@ export default async function TweetDetail({
   return (
     <div className="flex flex-col gap-5 m-5">
       <div className="flex flex-row justify-between">
+        <Link href="/">&larr;</Link>
         <div>Written by {tweet.user.username}</div>
         <div>{formatToTimeAgo(tweet.created_at)}</div>
       </div>

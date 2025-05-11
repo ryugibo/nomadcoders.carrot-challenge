@@ -20,7 +20,7 @@ export default function FormInput({
         </div>
         <input
           name={name}
-          className={`rounded-full ring-1 border-transparent ${
+          className={`ring-1 border-transparent ${
             errors && errors.length > 0 ? "ring-red-500" : "ring-neutral-500"
           }  focus:ring-neutral-500 focus:ring-offset-2 focus:border-gray-500 pl-9 w-full bg-transparent`}
           {...props}
