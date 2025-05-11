@@ -4,7 +4,7 @@ import { searchKeyword } from "@/app/(tab)/search/action";
 import FormButton from "./form-button";
 import FormInput from "./form-input";
 import { useActionState } from "react";
-import { PencilSquareIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 export default function SearchTweet() {
   const [state, action] = useActionState(searchKeyword, null);
@@ -16,7 +16,7 @@ export default function SearchTweet() {
           name="keyword"
           errors={state?.fieldErrors.keyword}
         >
-          <PencilSquareIcon className="size-5" />
+          <MagnifyingGlassIcon className="size-5" />
         </FormInput>
       </div>
       <div className="w-32 *:w-full">

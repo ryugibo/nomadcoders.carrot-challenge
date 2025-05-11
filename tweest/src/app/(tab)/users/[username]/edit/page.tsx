@@ -6,7 +6,7 @@ import FormInput from "@/components/form-input";
 import { PASSWORD_MIN_LENGTH, USERNAME_MIN_LENGTH } from "@/lib/constants";
 import { EnvelopeIcon, KeyIcon, UserIcon } from "@heroicons/react/24/solid";
 import FormButton from "@/components/form-button";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function UsersEdit({
   params,
@@ -15,8 +15,7 @@ export default function UsersEdit({
 }) {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
-
-  console.log(email);
+  const bio = searchParams.get("bio");
 
   const { username } = use(params);
   const [changeAccountInfoState, changeAccountInfoAction] = useActionState(
@@ -53,6 +52,7 @@ export default function UsersEdit({
         >
           <EnvelopeIcon className="size-4" />
         </FormInput>
+        <textarea name="bio" defaultValue={bio || "ww"}></textarea>
         <div className="flex w-full gap-5">
           <button
             className="flex-1/2 bg-neutral-300 rounded-xl py-2 cursor-pointer hover:bg-neutral-500 hover:text-white"

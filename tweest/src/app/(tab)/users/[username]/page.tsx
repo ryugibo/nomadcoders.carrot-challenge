@@ -44,7 +44,7 @@ export default async function UserProfile({
               className="hover:bg-neutral-300 px-2"
               href={{
                 pathname: `./${username}/edit`,
-                query: { email: user.email },
+                query: { email: user.email, bio: user.bio },
               }}
             >
               편집
@@ -60,7 +60,7 @@ export default async function UserProfile({
       <div className="w-full flex flex-col">
         <span className="text-4xl font-bold underline">{user.username}</span>
         <span>email: {user.email}</span>
-        <span className="">bio: {user.bio}</span>
+        <div className="whitespace-pre-line">bio: {user.bio}</div>
       </div>
     </div>
   );
